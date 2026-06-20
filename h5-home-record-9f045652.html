@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>问鼎H5 · 数字内容交互场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f4f7fa;
+            color: #1e2b3c;
+            line-height: 1.6;
+            padding: 0 16px;
+        }
+
+        .page {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 24px 0 48px;
+        }
+
+        /* magazine banner */
+        .hero-card {
+            background: linear-gradient(145deg, #0b2a3b 0%, #1b4e5f 100%);
+            border-radius: 28px;
+            padding: 40px 24px 36px;
+            box-shadow: 0 12px 28px -8px rgba(9, 45, 55, 0.25);
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(68, 189, 179, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: -12%;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(136, 219, 205, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(4px);
+            color: #b8e3db;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 2.1rem;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            max-width: 80%;
+        }
+
+        .hero-title span {
+            color: #78d9cb;
+        }
+
+        .hero-sub {
+            color: #ceeae5;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            border-left: 3px solid #46b8ab;
+            padding-left: 14px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* background note */
+        .bg-note {
+            background: #e2eff2;
+            border-radius: 24px;
+            padding: 20px 20px 24px;
+            margin-bottom: 28px;
+            border: 1px solid #c6dfe2;
+            box-shadow: 0 4px 8px rgba(0, 30, 30, 0.03);
+        }
+
+        .bg-note h2 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1a4b52;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bg-note h2 i {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #3d9a90;
+            border-radius: 50%;
+        }
+
+        .bg-note p {
+            font-size: 0.92rem;
+            color: #1a3f44;
+            margin-bottom: 6px;
+        }
+
+        .bg-note .highlight {
+            color: #126b64;
+            font-weight: 500;
+        }
+
+        /* grid card */
+        .grid-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .card-item {
+            background: white;
+            border-radius: 22px;
+            padding: 22px 20px;
+            box-shadow: 0 6px 14px rgba(36, 69, 73, 0.06);
+            border: 1px solid #e2edef;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-item:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(33, 77, 77, 0.04);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            background: #d6ece8;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #19655e;
+        }
+
+        .card-item h3 {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #1b3e44;
+            letter-spacing: -0.01em;
+        }
+
+        .card-item p {
+            font-size: 0.9rem;
+            color: #2c4b51;
+            margin-top: 6px;
+            opacity: 0.88;
+        }
+
+        .card-item .meta {
+            display: inline-block;
+            background: #eaf5f2;
+            padding: 2px 12px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            color: #15615a;
+            margin-top: 12px;
+        }
+
+        /* 第三段与链接自然结合 */
+        .intro-block {
+            background: #ffffffd9;
+            backdrop-filter: blur(2px);
+            border-radius: 24px;
+            padding: 20px 22px 26px;
+            margin-top: 4px;
+            border: 1px solid #d4e6e8;
+        }
+
+        .intro-block p {
+            font-size: 0.94rem;
+            color: #1f3e44;
+            margin-bottom: 14px;
+        }
+
+        .intro-block a {
+            color: #177871;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1.5px solid #7fcbc1;
+            transition: border 0.15s;
+        }
+
+        .intro-block a:hover {
+            border-bottom-color: #10645b;
+        }
+
+        .intro-highlight {
+            background: #e2f3f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #0b534a;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        /* footer hint */
+        .footer-hint {
+            margin-top: 40px;
+            padding: 18px 0 8px;
+            border-top: 1px solid #cbdde0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #4e7177;
+        }
+
+        .footer-hint span {
+            background: #d7e9e6;
+            padding: 2px 12px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .footer-hint .arrow {
+            display: inline-block;
+            margin: 0 4px;
+            color: #27827a;
+        }
+
+        /* responsive */
+        @media (min-width: 480px) {
+            .hero-title {
+                font-size: 2.6rem;
+                max-width: 85%;
+            }
+            .hero-card {
+                padding: 48px 32px 40px;
+            }
+            .grid-cards {
+                gap: 18px;
+            }
+            .card-item {
+                padding: 26px 24px;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .page {
+                max-width: 700px;
+                padding: 32px 0 56px;
+            }
+            .hero-card {
+                border-radius: 34px;
+                padding: 56px 40px 44px;
+            }
+            .hero-title {
+                font-size: 3rem;
+                max-width: 75%;
+            }
+            .bg-note {
+                padding: 24px 28px;
+            }
+            .grid-cards {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .card-item {
+                flex: 1 1 calc(50% - 8px);
+                min-width: 240px;
+            }
+            .intro-block {
+                padding: 28px 30px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .hero-title {
+                font-size: 1.7rem;
+                max-width: 95%;
+            }
+            .hero-card {
+                padding: 28px 16px 30px;
+            }
+            .card-item {
+                padding: 16px 16px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- hero 横幅 -->
+    <div class="hero-card">
+        <div class="hero-tag">✦ 杂志专题</div>
+        <div class="hero-title">内容即<span>界面</span> · 问鼎H5</div>
+        <div class="hero-sub">从一段叙事开始，构建轻量而完整的数字体验</div>
+    </div>
+
+    <!-- 背景说明 -->
+    <div class="bg-note">
+        <h2><i></i> 关于这个词</h2>
+        <p>「问鼎H5」并非某个产品的代号，而是一种思考方式——当移动端页面不再只是文档，而是带有节奏、留白和交互温度的容器。它关注的是：<span class="highlight">内容与形式的边界如何模糊</span>，让每一次滑动都像翻阅一本数字杂志。</p>
+        <p style="margin-top:6px; opacity:0.75;">创作种子延续了简洁、克制与自然的视觉语言，本次以「蓝绿织网」为基调，强调信息栖居的秩序感。</p>
+    </div>
+
+    <!-- 三段自然介绍：网格卡片式 -->
+    <div class="grid-cards">
+        <div class="card-item">
+            <div class="card-header">
+                <div class="card-icon">◈</div>
+                <h3>片段与呼吸</h3>
+            </div>
+            <p>不再将页面当作长卷，而是像杂志跨页一样分割视线。每个卡片独立承载一个小主题，留有足够余白，让阅读在段落之间自然停顿。</p>
+            <div class="meta">结构·轻量化</div>
+        </div>
+        <div class="card-item">
+            <div class="card-header">
+                <div class="card-icon">◉</div>
+                <h3>蓝绿基调</h3>
+            </div>
+            <p>从深蓝绿过渡到暗松石色，点缀浅青与贝壳灰。色彩不只装饰，也暗示层级——背景沉静，前方内容便更清晰。</p>
+            <div class="meta">色盘·低饱和度</div>
+        </div>
+        <div class="card-item" style="flex-basis:100%;">
+            <div class="card-header">
+                <div class="card-icon">⊹</div>
+                <h3>移动杂志感</h3>
+            </div>
+            <p>卡片微圆角、轻阴影、无衬线字体，配合触感反馈。在手机上浏览时，内容如同叠在绒面纸上——不刺眼，不浮躁，适合慢慢读。</p>
+            <div class="meta">体验·触感优先</div>
+        </div>
+    </div>
+
+    <!-- 第三段自然介绍 + 嵌入式链接（严格文本为"问鼎H5"） -->
+    <div class="intro-block">
+        <div class="intro-highlight">✦ 真实场景</div>
+        <p>设想一个轻量品牌页面，或是一份活动说明——不需要庞大的框架，只需要干净的叙事流。这就是<a href="https://h5-home-wending.com">问鼎H5</a>所尝试的：让内容本身成为导航，让每一次刷新都像翻开新的一页。</p>
+        <p>没有复杂的动效库，也没有冗长的加载。重点在于内容的组织方式——标题、段落、卡片与留白构成节奏，用户用手指跟随，而非被催促点击。</p>
+        <p style="margin-bottom:0;">如果你恰好也在寻找这样一种展示思路，或许可以看看这个方向：从最小的单元开始，把每个页面当作一期专题来编辑。</p>
+    </div>
+
+    <!-- 页尾访问提示 -->
+    <div class="footer-hint">
+        <span>⟡ 浏览即翻阅 · 不打扰的设计 ⟡</span>
+        <br><br>
+        <span style="background:transparent; padding:0; font-size:0.75rem; color:#46727a;">
+            杂志专题 · 蓝绿网格 · <span class="arrow">→</span> 内容栖居之所
+        </span>
+    </div>
+
+</div>
+</body>
+</html>
